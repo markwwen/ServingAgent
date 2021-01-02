@@ -1,8 +1,10 @@
-# Serving Agent
+<h1 align="center">Serving Agent</h1>
 
-一个用于模型服务化的轻量的中间件，其能提高 GPU 的利用率从而加速推理。
+<p align="center">
+一个用于模型服务化的轻量的中间件，其能提高 GPU 的利用率从而加速线上推理。
+</p>
 
-## 什么是 Serving Agent
+<h2 align="center">什么是 Serving Agent</h2>
 
 Serving Agent 被设计为一个为模型服务化提供的的中间件，其可以被插入在 model server 和 web server 之间，通过帮助提升 GPU 利用率来提高线上推理性能。
 

@@ -1,8 +1,12 @@
-# Serving Agent
+<h1 align="center">Serving Agent</h1>
 
-A lightweight middleware for model serving to improving GPU utilization then speedup online inference. [中文 README](https://github.com/HughWen/ServingAgent/blob/main/README_zh.md)
+<p align="center">
+A  middleware for model serving to speedup online inference.
+<a href="./README_zh.md">中文</a>
+</p>
 
-## What is Serving Agent
+<h2 align="center">What is Serving Agent</h2>
+
 
 Serving Agent is designed as a middleware for model serving between web server and model server to help the server improve the GPU utilization
 then speedup online inference.
