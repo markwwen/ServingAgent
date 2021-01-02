@@ -1,6 +1,6 @@
+from serving_agent import WebAgent
 from flask import Flask, jsonify, request
 
-from serving_agent import WebAgent
 
 app = Flask(__name__)
 web_agent = WebAgent(redis_broker='localhost:6379', redis_queue='example')
