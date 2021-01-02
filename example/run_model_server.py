@@ -1,4 +1,5 @@
 from serving_agent import ModelAgent
+
 from example.TestModel import TestModel
 
 if __name__ == "__main__":
