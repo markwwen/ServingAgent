@@ -81,4 +81,4 @@ if __name__ == '__main__':
 python -m example.run_web_server
 ```
 
-Congratulate! You has developed a scalable sevice in serveral minutes!
+Congratulate! You have developed a scalable sevice in serveral minutes!
