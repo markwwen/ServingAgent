@@ -1,7 +1,7 @@
 <h1 align="center">Serving Agent</h1>
 
 <p align="center">
-A  middleware for model serving to speedup online inference.
+A middleware for model serving to speedup online inference.
 <a href="./README_zh.md">中文</a>
 </p>
 
