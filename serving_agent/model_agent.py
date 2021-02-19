@@ -47,7 +47,6 @@ class ModelAgent:
                 self.db.mset({key: pickle.dumps(result) for key, result in zip(keys, results)})
             else:
                 mq_miss += 1
-            print(mq_miss)
             if mq_miss and mq_miss % self.collection_limit == 0:
                 mq_miss = 0
                 if self.collection and model:
