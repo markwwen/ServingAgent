@@ -9,8 +9,8 @@ setup(
     description='A middleware for model serving to speedup online inference.',
     author="wwen",
     author_email="wenwh@mail.sustech.edu.cn",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
+    # long_description=long_description,
+    # long_description_content_type="text/markdown",
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 3.5',
