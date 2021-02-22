@@ -7,13 +7,20 @@ A middleware for model serving to speedup online inference.
 
 <h2 align="center">What is Serving Agent</h2>
 
-
 Serving Agent is designed as a middleware for model serving between web server and model server to help the server improve the GPU utilization
 then speedup online inference.
 For the service with machile learning model, the requests from the client are usually streaming.
 To utilize the parallel computing capability of GPUs, we usually import a message queue/message broker to cache the request from web server then batch process with model server (the below figure shows the architecture). Serving Agent encapsulates the detial actions that such as serialize the request data, communicate with message queue (redis) and deserialization and more over. With Serving Agent, it is easy to build a scalable service with serveral codes.
 
-![model serving architecture](img/architecture.png)
+<!-- ![model serving architecture](img/architecture.png) -->
+<div align="center">
+<img src="img/architecture.png"/>
+</div>
+
+<h2 align="center">Changelog</h2>
+
+[Changelog](./CHANGELOG.md)
+
 
 <h2 align="center">Installation</h2>
 
@@ -46,7 +53,7 @@ from serving_agent import ModelAgent
 from example.TestModel import TestModel
 
 if __name__ == "__main__":
-    model_agent = ModelAgent(redis_broker='localhost:6379', redis_queue='example', model_class=TestModel)
+    model_agent = ModelAgent(redis_broker='localhost:6379', redis_queue='example', model_class=TestModel, collection=True, collection_limit=24000)
     model_agent.run()
 ```
 
@@ -60,6 +67,7 @@ python -m example.run_model_server
 from serving_agent import WebAgent
 from flask import Flask, jsonify, request
 
+
 app = Flask(__name__)
 web_agent = WebAgent(redis_broker='localhost:6379', redis_queue='example')
 
@@ -67,18 +75,31 @@ web_agent = WebAgent(redis_broker='localhost:6379', redis_queue='example')
 @app.route('/api/test', methods=['POST'])
 def test():
     parmas = request.get_json()
-    data = parmas['data']
-    result = web_agent.process(data)
-    return jsonify({'data': result})
+    data = parmas['data']  # input batch
+    results = web_agent.process(data)
+    return jsonify({'data': results})
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
 ```
 
-```shell
+```
 python -m example.run_web_server
 ```
+
+4. Test the server.
+
+```
+curl --location --request POST 'http://127.0.0.1:5000/api/test' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "data": [
+        "hello",
+        "world"
+    ]
+}'
+```
+
 
 Congratulate! You have developed a scalable sevice in serveral minutes!
