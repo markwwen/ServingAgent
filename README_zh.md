@@ -36,7 +36,7 @@ class TestModel:
         return [random.random() for x in inputs]
 ```
 
-1. 开发一个 model server [run_model_server.py](./example/run_model_server.py) 并运行.
+2. 开发一个 model server [run_model_server.py](./example/run_model_server.py) 并运行。
 
 ```python
 from serving_agent import ModelAgent
@@ -44,7 +44,7 @@ from serving_agent import ModelAgent
 from example.TestModel import TestModel
 
 if __name__ == "__main__":
-    model_agent = ModelAgent(redis_broker='localhost:6379', redis_queue='example', model_class=TestModel)
+    model_agent = ModelAgent(redis_broker='localhost:6379', redis_queue='example', model_class=TestModel, collection=True, collection_limit=24000)
     model_agent.run()
 ```
 
@@ -52,11 +52,12 @@ if __name__ == "__main__":
 python -m example.run_model_server
 ```
 
-1. 使用 Flask 开发一个 web server （或任何别的 Python web 框架都可以） 并启动.
+3. 使用 Flask 开发一个 web server （或任何别的 Python web 框架都可以） 并启动。
 
 ```python
 from serving_agent import WebAgent
 from flask import Flask, jsonify, request
+
 
 app = Flask(__name__)
 web_agent = WebAgent(redis_broker='localhost:6379', redis_queue='example')
@@ -65,18 +66,30 @@ web_agent = WebAgent(redis_broker='localhost:6379', redis_queue='example')
 @app.route('/api/test', methods=['POST'])
 def test():
     parmas = request.get_json()
-    data = parmas['data']
-    result = web_agent.process(data)
-    return jsonify({'data': result})
+    data = parmas['data']  # input batch
+    results = web_agent.process(data)
+    return jsonify({'data': results})
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
 ```
 
 ```shell
 python -m example.run_web_server
+```
+
+4. 测试服务。
+
+```shell
+curl --location --request POST 'http://127.0.0.1:5000/api/test' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "data": [
+        "hello",
+        "world"
+    ]
+}'
 ```
 
 恭喜！你已经在几分钟内就开发了一个高性能的模型服务！

@@ -53,7 +53,7 @@ from serving_agent import ModelAgent
 from example.TestModel import TestModel
 
 if __name__ == "__main__":
-    model_agent = ModelAgent(redis_broker='localhost:6379', redis_queue='example', model_class=TestModel)
+    model_agent = ModelAgent(redis_broker='localhost:6379', redis_queue='example', model_class=TestModel, collection=True, collection_limit=24000)
     model_agent.run()
 ```
 
@@ -67,6 +67,7 @@ python -m example.run_model_server
 from serving_agent import WebAgent
 from flask import Flask, jsonify, request
 
+
 app = Flask(__name__)
 web_agent = WebAgent(redis_broker='localhost:6379', redis_queue='example')
 
@@ -74,18 +75,31 @@ web_agent = WebAgent(redis_broker='localhost:6379', redis_queue='example')
 @app.route('/api/test', methods=['POST'])
 def test():
     parmas = request.get_json()
-    data = parmas['data']
-    result = web_agent.process(data)
-    return jsonify({'data': result})
+    data = parmas['data']  # input batch
+    results = web_agent.process(data)
+    return jsonify({'data': results})
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
 ```
 
 ```shell
 python -m example.run_web_server
 ```
+
+4. Test the server.
+
+```shell
+curl --location --request POST 'http://127.0.0.1:5000/api/test' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "data": [
+        "hello",
+        "world"
+    ]
+}'
+```
+
 
 Congratulate! You have developed a scalable sevice in serveral minutes!
