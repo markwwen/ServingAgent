@@ -13,7 +13,6 @@ def test():
     parmas = request.get_json()
     data = parmas['data']  # input batch
     results = web_agent.process(data)
-    results = [pickle.loads(x) for x in results]
     return jsonify({'data': results})
 
 
