@@ -1,5 +1,3 @@
-import pickle
-
 from serving_agent import WebAgent
 from flask import Flask, jsonify, request
 
