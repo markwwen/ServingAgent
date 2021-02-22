@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name='serving_agent',
-    version="0.1.0",
+    version="0.2.0",
     description='A middleware for model serving to speedup online inference.',
     author="wwen",
     author_email="wenwh@mail.sustech.edu.cn",
