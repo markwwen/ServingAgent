@@ -84,13 +84,13 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-```shell
+```
 python -m example.run_web_server
 ```
 
 4. Test the server.
 
-```shell
+```
 curl --location --request POST 'http://127.0.0.1:5000/api/test' \
 --header 'Content-Type: application/json' \
 --data-raw '{
